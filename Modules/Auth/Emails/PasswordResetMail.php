@@ -32,7 +32,7 @@ class PasswordResetMail extends Mailable
     {
         return new Envelope(
             subject: 'Password Reset Mail',
-            from: new Address('info@qer3ah.com', 'Qer3ah')
+            from: new Address('info@fullmarkwork.com', 'Full-Mark-Work')
         );
     }
     /**

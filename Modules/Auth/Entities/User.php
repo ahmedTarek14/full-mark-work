@@ -3,9 +3,12 @@
 namespace Modules\Auth\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Course\Entities\Course;
+use Modules\Course\Entities\CourseUser;
 
 class User extends Authenticatable
 {
@@ -44,5 +47,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, CourseUser::class);
+    }
 
 }
