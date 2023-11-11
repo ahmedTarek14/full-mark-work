@@ -18,7 +18,7 @@ class AuthDatabaseSeeder extends Seeder
     {
         Admin::create([
             'name' => 'admin',
-            'email' => 'admin@meat.com',
+            'email' => 'admin@admin.com',
             'email_verified_at' => Carbon::now(),
             'password' => bcrypt('gz3uvN3O7@7@'),
         ]);

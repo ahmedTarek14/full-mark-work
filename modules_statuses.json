@@ -2,5 +2,6 @@
     "Auth": true,
     "Class": true,
     "Course": true,
-    "Type": true
+    "Type": true,
+    "Dashboard": true
 }

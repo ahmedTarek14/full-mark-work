@@ -216,28 +216,6 @@ class AuthController extends Controller
             return api_response_error(__('auth::common.password_mismatch'));
         }
     }
-    public function active_subs()
-    {
-        $loginUser = sanctum()->id();
-        $user = User::where('id', $loginUser)->first();
-        if ($user->status == '1') {
-            if ($user->is_subscribe == '1') {
-                return api_response_error('Subscribed already');
-            } else {
-                $user->update([
-                    'is_subscribe' => '1',
-                ]);
-            }
-
-        } else {
-            return api_response_error(__('auth::common.account_closed'));
-        }
-        try {
-            return api_response_success('You have successfully subscribed');
-        } catch (\Throwable $th) {
-            return api_response_error();
-        }
-    }
 
     public function logged_user()
     {

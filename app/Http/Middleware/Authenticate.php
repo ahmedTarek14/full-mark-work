@@ -43,7 +43,7 @@ class Authenticate extends Middleware
         if ($request->is('api/*')) {
             throw new HttpResponseException(response()->json([
                 'status' => false,
-                'message' => 'الرجاء تسجيل الدخول لاستخدام هذا الميزة',
+                'message' => 'الرجاء تسجيل الدخول أولاً',
             ], 401));
         } else {
             if (Arr::first($this->guards) === 'web') {
