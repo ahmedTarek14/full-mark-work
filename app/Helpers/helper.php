@@ -1,5 +1,4 @@
 <?php
-use Illuminate\Support\Str;
 use Modules\Vote\Entities\Vote;
 
 if (!function_exists('failed_validation')) {
@@ -12,21 +11,21 @@ if (!function_exists('failed_validation')) {
 if (!function_exists('add_response')) {
     function add_response()
     {
-        return response()->json('تم إضافة البيانات بنجاح', 200);
+        return response()->json('Data has been added successfully', 200);
     }
 }
 
 if (!function_exists('update_response')) {
     function update_response()
     {
-        return response()->json('تم تحديث البيانات بنجاح', 200);
+        return response()->json('Data has been updated successfully', 200);
     }
 }
 
 if (!function_exists('error_response')) {
     function error_response()
     {
-        return response()->json('حدث خطأ برجاء إعاده المحاوله مره أخري', 400);
+        return response()->json('Error , please try again later', 400);
     }
 }
 
@@ -41,6 +40,13 @@ if (!function_exists('aurl')) {
     function aurl($path)
     {
         return asset('admin-assets/' . $path);
+    }
+}
+
+if (!function_exists('locale')) {
+    function locale()
+    {
+        return app()->getLocale();
     }
 }
 
@@ -64,25 +70,11 @@ if (!function_exists('api_response_success')) {
 if (!function_exists('api_response_error')) {
     function api_response_error($message = null)
     {
-        $message = $message != null ? $message : ('لقد حدث خطا برجاء المحاوله لاحقا');
+        $message = $message != null ? $message : 'Error , please try again later';
 
         return response()->json([
             'status' => false,
             'message' => $message,
         ], 400);
-    }
-}
-if (!function_exists('generateUniqueString')) {
-    function generateUniqueString()
-    {
-        $randomString = Str::random(8);
-        return $randomString;
-    }
-}
-
-if (!function_exists('locale')) {
-    function locale()
-    {
-        return app()->getLocale();
     }
 }

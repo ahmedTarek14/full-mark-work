@@ -1,16 +1,13 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+/**
+ * dashboard page Routes
+ */
 
-Route::prefix('type')->group(function() {
-    Route::get('/', 'TypeController@index');
+use Illuminate\Support\Facades\Route;
+use Modules\Type\Http\Controllers\Dashboard\TypeController;
+
+Route::middleware('auth:web')->name('admin.')->prefix('admin')->group(function () {
+    Route::resource('type', TypeController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+
 });

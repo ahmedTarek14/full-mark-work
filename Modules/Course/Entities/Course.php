@@ -14,7 +14,7 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'link'];
+    protected $fillable = ['name', 'type_id'];
 
     /**
      * return restaurant users
@@ -34,7 +34,12 @@ class Course extends Model
      */
     public function class (): BelongsTo
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(Type::class, 'type_id');
+    }
+
+    public function links(): HasMany
+    {
+        return $this->hasMany(Link::class);
     }
 
 }

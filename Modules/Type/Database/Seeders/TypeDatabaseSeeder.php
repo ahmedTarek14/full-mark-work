@@ -2,8 +2,9 @@
 
 namespace Modules\Type\Database\Seeders;
 
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
+use Modules\Type\Entities\Type;
 
 class TypeDatabaseSeeder extends Seeder
 {
@@ -14,8 +15,14 @@ class TypeDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        $faker = Faker::create();
 
-        // $this->call("OthersTableSeeder");
+        // Seed data using Eloquent model and Faker
+        for ($i = 0; $i < 10; $i++) {
+            Type::create([
+                'name' => $faker->word,
+                // Add other fields and Faker methods as needed
+            ]);
+        }
     }
 }

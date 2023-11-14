@@ -49,8 +49,8 @@ class AuthController extends Controller
                 $user->update([
                     'fcm_token' => $loginRequest->fcm_token,
                 ]);
+                $user->tokens()->delete();
                 $token = $user->createToken('login')->plainTextToken;
-
                 return api_response_success([
                     'token' => $token,
                     'user' => new UserResource($user),
