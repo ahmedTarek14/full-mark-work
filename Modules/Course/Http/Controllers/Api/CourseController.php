@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Laravel\Sanctum\Sanctum;
 use Modules\Auth\Entities\User;
+use Modules\Course\Entities\Course;
 use Modules\Course\Entities\Link;
 use Modules\Course\Transformers\CourseResource;
 use Modules\Course\Transformers\LinkResource;
@@ -20,7 +21,16 @@ class CourseController extends Controller
     {
         try {
             $user = User::with('courses')->find(Sanctum()->id());
-            $data = CourseResource::collection($user->courses->sortByDesc('created_at'))->response()->getData(true);
+
+            if ($user->courses->isEmpty()) {
+                // If the user has no courses, fetch courses with default = 1
+                $defaultCourses = Course::where('default', 1)->get();
+                $data = CourseResource::collection($defaultCourses->sortByDesc('created_at'))->response()->getData(true);
+            } else {
+                // If the user has courses, return the user's courses
+                $data = CourseResource::collection($user->courses->sortByDesc('created_at'))->response()->getData(true);
+            }
+
             return api_response_success($data);
         } catch (\Throwable $th) {
             return api_response_error();

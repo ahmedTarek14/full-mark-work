@@ -16,5 +16,6 @@ use Modules\Course\Http\Controllers\Dashboard\CourseController;
 
 Route::middleware('auth:web')->name('admin.')->prefix('admin')->group(function () {
     Route::resource('course', CourseController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+    Route::get('course/update-default/{course}', [CourseController::class, 'update_default'])->name('course.update_default');
 
 });

@@ -14,7 +14,7 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'type_id'];
+    protected $fillable = ['name', 'type_id', 'default'];
 
     /**
      * return restaurant users

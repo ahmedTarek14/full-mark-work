@@ -26,9 +26,15 @@ class CourseController extends Controller
                     'name' => $query->name,
                     'class' => $query->class?->name,
                     'users' => $query->usersPivot->count(),
+                    'default' => $query->default == 1 ? 'yes' : 'no',
                     'created_at' => $query->created_at->format('d-m-Y'),
                 ];
                 $btn = '<div class="d-flex">';
+                if ($returns['default'] == 'yes') {
+                    $btn = $btn . '<a class="btn btn-warning me-1 mb-2" title="Deactivated Account" href="' . route('admin.course.update_default', ['course' => $returns['id']]) . '"><i class="ti ti-minus" style="margin-right:5px;"></i> Remove Default</a>';
+                } else {
+                    $btn = $btn . '<a class="btn btn-success me-1 mb-2" title="Activated Account" href="' . route('admin.course.update_default', ['course' => $returns['id']]) . '"><i class="ti ti-check" style="margin-right:5px;"></i> Add Default</a>';
+                }
                 $btn = $btn . '<a class="btn btn-primary me-1 mb-2" href="' . route('admin.course.edit', ['course' => $returns['id']]) . '"><i class="ti ti-edit" style="margin-right:5px;"></i> Edit</a>';
                 $btn .= '<a href="javascript:;" class="btn btn-danger me-1 mb-2 delete-btn" data-url="' . route('admin.course.destroy', ['course' => $returns['id']]) . '"><i class="ti ti-trash" style="margin-right:5px;"></i> Delete</a>';
                 $btn .= '</div>';
@@ -149,6 +155,19 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         $course->delete();
+
+        return redirect()->back();
+    }
+    public function update_default($id)
+    {
+        $course = Course::findOrFail($id);
+
+        if ($course->default == '1') {
+            $course->default = '0';
+        } else {
+            $course->default = '1';
+        }
+        $course->save();
 
         return redirect()->back();
     }
