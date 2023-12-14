@@ -37,6 +37,17 @@ class CourseController extends Controller
         }
     }
 
+    public function default()
+    {
+        try {
+            $defaultCourses = Course::where('default', 1)->get();
+            $data = CourseResource::collection($defaultCourses->sortByDesc('created_at'))->response()->getData(true);
+            return api_response_success($data);
+        } catch (\Throwable $th) {
+            return api_response_error();
+        }
+    }
+
     public function links($id)
     {
         try {
