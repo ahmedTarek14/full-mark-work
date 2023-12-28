@@ -51,7 +51,7 @@ class CourseController extends Controller
     public function links($id)
     {
         try {
-            $links = Link::where('course_id', $id)->orderBy('created_at', 'desc')->get();
+            $links = Link::where('course_id', $id)->orderBy('id', 'asc')->get();
             $data = LinkResource::collection($links)->response()->getData(true);
             return api_response_success($data);
         } catch (\Throwable $th) {

@@ -28,21 +28,27 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @foreach ($course->links as $link)
-                                <div class="mb-3">
-                                    <label for="link_title" class="form-label">Video Title</label>
-                                    <input type="text" class="form-control" id="link_title" name="link_title[]"
-                                        value="{{ $link->name }}">
-                                </div>
+                            <div class="mb-3" id="additionalInputs">
+                                @foreach ($course->links as $index => $link)
+                                    <div>
+                                        <div class="mb-3">
+                                            <label for="link_title" class="form-label">Video Title</label>
+                                            <input type="text" class="form-control" id="link_title" name="link_title[]"
+                                                value="{{ $link->name }}">
+                                        </div>
 
-                                <div class="mb-3">
-                                    <label for="link" class="form-label">Link</label>
-                                    <input type="text" class="form-control" id="link" name="link[]"
-                                        value="{{ $link->url }}">
-                                </div>
-                            @endforeach
-
-                            <div class="mb-3" id="additionalInputs"></div>
+                                        <div class="mb-3">
+                                            <label for="link" class="form-label">Link</label>
+                                            <input type="text" class="form-control" id="link" name="link[]"
+                                                value="{{ $link->url }}">
+                                        </div>
+                                        @if ($index > 0)
+                                            <button type="button" class="btn btn-danger mb-3"
+                                                onclick="deleteInput(this)">Delete</button>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
 
                             <button type="button" class="mb-3 btn btn-success d-block" onclick="addInput()">Add
                                 More</button>
@@ -71,6 +77,9 @@
         function addInput() {
             var additionalInputs = document.getElementById('additionalInputs');
 
+            var inputGroup = document.createElement('div');
+            inputGroup.className = 'mb-3';
+
             var titleGroup = document.createElement('div');
             titleGroup.className = 'mb-3';
 
@@ -97,13 +106,30 @@
             linkInput.name = 'link[]';
             linkInput.value = '{{ old('link') }}';
 
+            var deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn btn-danger';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                additionalInputs.removeChild(inputGroup);
+            };
+
             titleGroup.appendChild(titleLabel);
             titleGroup.appendChild(titleInput);
             linkGroup.appendChild(linkLabel);
             linkGroup.appendChild(linkInput);
 
-            additionalInputs.appendChild(titleGroup);
-            additionalInputs.appendChild(linkGroup);
+            inputGroup.appendChild(titleGroup);
+            inputGroup.appendChild(linkGroup);
+            inputGroup.appendChild(deleteButton);
+
+            additionalInputs.appendChild(inputGroup);
+        }
+
+        function deleteInput(button) {
+            var additionalInputs = document.getElementById('additionalInputs');
+            var inputGroup = button.parentElement;
+            additionalInputs.removeChild(inputGroup);
         }
     </script>
 @endsection
