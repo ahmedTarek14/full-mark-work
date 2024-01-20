@@ -17,6 +17,9 @@ class CourseResource extends JsonResource
         return [
             'id' => (int) $this->id,
             'name' => (string) $this->name,
+            'is_subscribed' => $this->whenPivotLoaded('user_course', function () {
+                return true;
+            }, false),
         ];
     }
 }

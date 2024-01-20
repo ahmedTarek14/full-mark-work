@@ -4,7 +4,6 @@ namespace Modules\Course\Http\Controllers\Api;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
-use Laravel\Sanctum\Sanctum;
 use Modules\Auth\Entities\User;
 use Modules\Course\Entities\Course;
 use Modules\Course\Entities\Link;
@@ -19,16 +18,42 @@ class CourseController extends Controller
      */
     public function index()
     {
+        // try {
+        //     $user = User::with('courses')->find(Sanctum()->id());
+
+        //     if ($user->courses->isEmpty()) {
+        //         // If the user has no courses, fetch courses with default = 1
+        //         $defaultCourses = Course::where('default', 1)->get();
+        //         // $defaultCourses = Course::paginate(10);
+        //         $data = CourseResource::collection($defaultCourses->sortByDesc('created_at'))->response()->getData(true);
+        //     } else {
+        //         // If the user has courses, return the user's courses
+        //         $data = CourseResource::collection($user->courses->sortByDesc('created_at'))->response()->getData(true);
+        //     }
+
+        //     return api_response_success($data);
+        // } catch (\Throwable $th) {
+        //     return api_response_error();
+        // }
         try {
             $user = User::with('courses')->find(Sanctum()->id());
 
-            if ($user->courses->isEmpty()) {
-                // If the user has no courses, fetch courses with default = 1
-                $defaultCourses = Course::where('default', 1)->get();
-                $data = CourseResource::collection($defaultCourses->sortByDesc('created_at'))->response()->getData(true);
-            } else {
-                // If the user has courses, return the user's courses
-                $data = CourseResource::collection($user->courses->sortByDesc('created_at'))->response()->getData(true);
+            // Fetch all courses
+            $allCourses = Course::all();
+
+            // Use CourseResource to transform all courses and include 'is_subscribed'
+            $data = CourseResource::collection($allCourses)->response()->getData(true);
+
+            // If the user has courses, set 'is_subscribed' to true for those courses
+            if (!$user->courses->isEmpty()) {
+                $courseIdsSubscribed = $user->courses->pluck('id')->toArray();
+                foreach ($data as &$course) {
+                    if (in_array($course['id'], $courseIdsSubscribed)) {
+                        $course['is_subscribed'] = true;
+                    } else {
+                        $course['is_subscribed'] = false;
+                    }
+                }
             }
 
             return api_response_success($data);
