@@ -3,5 +3,6 @@
     "Class": true,
     "Course": true,
     "Type": true,
-    "Dashboard": true
+    "Dashboard": true,
+    "University": true
 }
