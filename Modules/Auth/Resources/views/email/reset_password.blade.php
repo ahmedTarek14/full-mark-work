@@ -66,7 +66,7 @@
     <div class="container">
         <!-- Logo -->
         <div class="logo">
-            <img src="{{ aurl('images/quroaa-logo.png') }}" alt="Your Logo">
+            <img src="{{ aurl('images/fullMark.jpg') }}" alt="Your Logo">
         </div>
 
         <!-- Header -->
@@ -95,7 +95,7 @@
         <p>
             If you did not request this password reset, please disregard this email. Your account remains secure. If you
             have any questions or need assistance, please don't hesitate to contact our support team at
-            {{ config('mail.support_email') }}.
+            .
         </p>
 
         <p>
@@ -211,7 +211,7 @@
         <p>
             If you did not request this password reset, please disregard this email. Your account remains secure. If you
             have any questions or need assistance, please don't hesitate to contact our support team at
-            {{ config('mail.support_email') }}.
+            support@fullmarkwork.com.
         </p>
 
         <p>

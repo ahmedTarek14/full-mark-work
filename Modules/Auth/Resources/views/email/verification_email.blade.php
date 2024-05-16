@@ -87,7 +87,7 @@
  --}}
 
 
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -159,18 +159,18 @@
         <!-- Logo -->
         <div class="header">
             {{-- <img class="logo" src="https://example.com/images/quroaa-logo.png" alt="Qor3ah Logo"> --}}
-            <h1>Verify your email</h1>
-        </div>
+<h1>Verify your email</h1>
+</div>
 
-        <!-- Content -->
-        <p>Welcome to {{ config('app.name') }}! Please use the following code to confirm your email address and complete
-            the registration process:</p>
-        <p>Please use this code: <span class="code">{{ $details['code'] }}</span></p>
-        <p>Thank you, {{ config('app.name') }}</p>
-    </div>
-    <div class="footer">
-        &copy; {{ date('Y') }} {{ config('app.name') }}
-    </div>
+<!-- Content -->
+<p>Welcome to {{ config('app.name') }}! Please use the following code to confirm your email address and complete
+    the registration process:</p>
+<p>Please use this code: <span class="code">{{ $details['code'] }}</span></p>
+<p>Thank you, {{ config('app.name') }}</p>
+</div>
+<div class="footer">
+    &copy; {{ date('Y') }} {{ config('app.name') }}
+</div>
 </body>
 
-</html>
+</html> --}}

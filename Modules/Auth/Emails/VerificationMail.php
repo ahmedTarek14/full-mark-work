@@ -31,7 +31,7 @@ class VerificationMail extends Mailable
     {
         return new Envelope(
             subject: 'Verification Mail',
-            from: new Address('info@fullmarkwork.com', 'Full-Mark-Work')
+            from: new Address('support@fullmarkwork.com', 'Full-Mark-Work')
         );
     }
 

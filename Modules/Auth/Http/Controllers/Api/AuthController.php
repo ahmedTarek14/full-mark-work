@@ -69,7 +69,7 @@ class AuthController extends Controller
         $user = $request->user();
         $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
 
-        return api_response_success(__('auth::common.logout_successful'));
+        return api_response_success(__('auth::common.logout_successfully'));
     }
 
     public function resendCode(Request $request)

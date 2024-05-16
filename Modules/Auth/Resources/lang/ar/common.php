@@ -3,7 +3,7 @@ return [
     'account_closed' => 'تم إغلاق حسابك برجاء التواصل مع الإدارة',
     'password_mismatch' => 'الرقم السري غير متطابق',
     'data_check_failed' => 'برجاء مراجعة بيانات والمحاولة مرة أخرى',
-    'logout_successful' => 'تم تسجيل الخروج بنجاح',
+    'logout_successfully' => 'تم تسجيل الخروج بنجاح',
     'email' => 'البريد الإلكتروني',
     'verification_code_sent' => 'تم إرسال الرمز التعريفي لبريدك الإلكتروني',
     'verification_code' => 'الرمز التعريفي',
