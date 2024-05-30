@@ -12,7 +12,7 @@ class Link extends Model
 
     protected $fillable = ['name', 'url', 'course_id'];
 
-    public function class (): BelongsTo
+    public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }

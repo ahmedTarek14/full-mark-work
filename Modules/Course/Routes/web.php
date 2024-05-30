@@ -18,4 +18,5 @@ Route::middleware('auth:web')->name('admin.')->prefix('admin')->group(function (
     Route::resource('course', CourseController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     Route::get('course/update-default/{course}', [CourseController::class, 'update_default'])->name('course.update_default');
 
+    Route::post('levels-ajax', [CourseController::class, 'levels'])->name('ajax.levels');
 });

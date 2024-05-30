@@ -25,7 +25,10 @@
                                         <h6 class="fw-semibold mb-0">Name</h6>
                                     </th>
                                     <th class="border-bottom-0">
-                                        <h6 class="fw-semibold mb-0">Class</h6>
+                                        <h6 class="fw-semibold mb-0">University</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Level</h6>
                                     </th>
                                     <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">Count of users</h6>
@@ -49,7 +52,10 @@
                                             <p class="mb-0 fw-normal">{{ $course['name'] }}</p>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $course['class'] }}</p>
+                                            <p class="mb-0 fw-normal">{{ $course['university'] }}</p>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">{{ $course['level'] }}</p>
                                         </td>
                                         <td class="border-bottom-0">
                                             <p class="mb-0 fw-normal">{{ $course['users'] }}</p>

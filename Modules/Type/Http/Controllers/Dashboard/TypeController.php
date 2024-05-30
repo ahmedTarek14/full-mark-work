@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Type\Entities\Type;
 use Modules\Type\Http\Requests\TypeRequest;
+use Modules\University\Entities\University;
 
 class TypeController extends Controller
 {
@@ -21,6 +22,7 @@ class TypeController extends Controller
                 $returns = [
                     'id' => $query->id,
                     'name' => $query->name,
+                    'university'=>$query?->university?->name,
                     'created_at' => $query->created_at->format('d-m-Y'),
                 ];
                 $btn = '<div class="d-flex">';
@@ -30,8 +32,9 @@ class TypeController extends Controller
                 $returns['btn'] = $btn;
                 return $returns;
             });
+            $universities = University::select('name','id')->orderBy('created_at', 'desc')->get();
 
-        return view('type::type.index', compact('types'));
+        return view('type::type.index', compact('types','universities'));
 
     }
 
@@ -45,6 +48,7 @@ class TypeController extends Controller
         try {
             $data = [
                 'name' => $request->name,
+                'university_id' => $request->university_id,
             ];
             Type::create($data);
             return add_response();
@@ -60,7 +64,8 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        return view('type::type.edit', compact('type'));
+        $universities = University::select('name','id')->orderBy('created_at', 'desc')->get();
+        return view('type::type.edit', compact('type','universities'));
     }
 
     /**
@@ -73,6 +78,7 @@ class TypeController extends Controller
     {
         try {
             $data['name'] = $request->name;
+            $data['university_id'] = $request->university_id;
             $type->update($data);
             return update_response();
         } catch (\Throwable $th) {

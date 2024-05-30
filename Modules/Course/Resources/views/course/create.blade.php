@@ -15,13 +15,31 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="type_id" class="form-label">Course Class</label>
-                                <select class="form-control" id="type_id" name="type_id">
+                                <label for="university_id" class="form-label">University</label>
+                                <select class="form-control universities" id="university_id" name="university_id">
                                     <option value="0">Choose One</option>
-                                    @foreach ($types as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @foreach ($universities as $university)
+                                        <option value="{{ $university->id }}">{{ $university->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="type_id" class="form-label">Course Level</label>
+                                <select class="form-control levels" id="type_id" name="type_id">
+                                    <option value="0">Choose One</option>
+
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="pdf" class="form-label">Upload PDF</label>
+                                <input type="file" class="form-control" id="pdf_upload" name="pdf"
+                                    accept="application/pdf">
+                            </div>
+
+                            <div class="mb-3">
+                                <iframe id="pdf_preview" style="width: 100%; height: 500px; display: none;"></iframe>
                             </div>
 
                             <div class="mb-3">
@@ -57,7 +75,8 @@
             </div>
         </div>
     </div>
-
+@endsection
+@push('js')
     <script>
         function addInput() {
             var additionalInputs = document.getElementById('additionalInputs');
@@ -94,5 +113,36 @@
             additionalInputs.appendChild(titleGroup);
             additionalInputs.appendChild(linkGroup);
         }
+
+        $(document).on('change', '.universities', function() {
+
+            var url = "{{ route('admin.ajax.levels') }}";
+            var university_id = $(this).val()
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    university_id: university_id
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $('.levels').html(response);
+                }
+            })
+
+            return false;
+        });
+
+        document.getElementById('pdf_upload').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            if (file.type === 'application/pdf') {
+                var url = URL.createObjectURL(file);
+                var iframe = document.getElementById('pdf_preview');
+                iframe.src = url;
+                iframe.style.display = 'block';
+            }
+        });
     </script>
-@endsection
+@endpush

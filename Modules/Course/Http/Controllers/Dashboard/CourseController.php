@@ -2,6 +2,7 @@
 
 namespace Modules\Course\Http\Controllers\Dashboard;
 
+use App\Traits\ImageTrait;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -10,9 +11,11 @@ use Modules\Course\Entities\Course;
 use Modules\Course\Entities\Link;
 use Modules\Course\Http\Requests\CourseRequest;
 use Modules\Type\Entities\Type;
+use Modules\University\Entities\University;
 
 class CourseController extends Controller
 {
+    use ImageTrait;
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -24,12 +27,18 @@ class CourseController extends Controller
                 $returns = [
                     'id' => $query->id,
                     'name' => $query->name,
-                    'class' => $query->class?->name,
+                    'level' => $query?->level?->name,
+                    'university' => $query?->university?->name,
                     'users' => $query->usersPivot->count(),
                     'default' => $query->default == 1 ? 'yes' : 'no',
+                    'pdf_flag' => $query->pdf ? 1 : 0,
+                    'pdf' => $query->pdf_path,
                     'created_at' => $query->created_at->format('d-m-Y'),
                 ];
                 $btn = '<div class="d-flex">';
+                if ($returns['pdf_flag'] == 1) {
+                    $btn = $btn . '<a class="btn btn-dark me-1 mb-2" title="View PDF" href="' . $returns['pdf'] . '" download><i class="ti ti-file" style="margin-right:5px;"></i> View PDF</a>';
+                }
                 if ($returns['default'] == 'yes') {
                     $btn = $btn . '<a class="btn btn-warning me-1 mb-2" title="Deactivated Account" href="' . route('admin.course.update_default', ['course' => $returns['id']]) . '"><i class="ti ti-minus" style="margin-right:5px;"></i> Remove Default</a>';
                 } else {
@@ -45,15 +54,28 @@ class CourseController extends Controller
         return view('course::course.index', compact('courses'));
     }
 
+
+    public function levels(Request $request)
+    {
+        $levels = Type::where('university_id', $request->university_id)->orderBy('id', 'desc')->get()->map(function ($query) {
+            return [
+                'id' => $query->id,
+                'name' => $query->name,
+            ];
+        });
+
+        return response()->json(view('course::course.levels', ['levels' => $levels])->render(), 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
     public function create()
     {
-        $types = Type::orderBy('created_at', 'desc')->get();
+        $universities = University::orderBy('created_at', 'desc')->get();
         $users = User::orderBy('created_at', 'desc')->get();
-        return view('course::course.create', compact('types', 'users'));
+        return view('course::course.create', compact('users', 'universities'));
     }
 
     /**
@@ -66,7 +88,9 @@ class CourseController extends Controller
         try {
             $course = Course::create([
                 'name' => $request->course_name,
+                'university_id' => $request->university_id,
                 'type_id' => $request->type_id,
+                'pdf' => $request->pdf ? $this->image_manipulate($request->pdf, 'courses') : null,
             ]);
 
             $links = [];
@@ -99,12 +123,13 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        $types = Type::orderBy('created_at', 'desc')->get();
+        $types = Type::where('university_id', $course->university_id)->orderBy('created_at', 'desc')->get();
+        $universities = University::orderBy('created_at', 'desc')->get();
         $users = User::orderBy('created_at', 'desc')->get();
         $course->load('usersPivot');
         $course->load('links');
 
-        return view('course::course.edit', compact('course', 'types', 'users'));
+        return view('course::course.edit', compact('course', 'types', 'users', 'universities'));
     }
 
     /**
@@ -118,6 +143,7 @@ class CourseController extends Controller
         try {
             $course->update([
                 'name' => $request->course_name,
+                'university_id' => $request->university_id,
                 'type_id' => $request->type_id,
             ]);
 

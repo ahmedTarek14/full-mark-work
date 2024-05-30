@@ -17,8 +17,20 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="type_id" class="form-label">Course Class</label>
-                                <select class="form-control" id="type_id" name="type_id">
+                                <label for="university_id" class="form-label">University</label>
+                                <select class="form-control universities" id="university_id" name="university_id">
+                                    <option value="0">Choose One</option>
+                                    @foreach ($universities as $university)
+                                        <option
+                                            value="{{ $university->id }}"{{ $course->university_id == $university->id ? 'selected' : '' }}>
+                                            {{ $university->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="type_id" class="form-label">Course Level</label>
+                                <select class="form-control levels" id="type_id" name="type_id">
                                     <option value="0">Choose One</option>
                                     @foreach ($types as $type)
                                         <option
@@ -27,6 +39,20 @@
                                         </option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pdf_upload" class="form-label">Upload PDF</label>
+                                <input type="file" class="form-control" id="pdf_upload" name="pdf"
+                                    value = "{{ $course->pdf_path }}" accept="application/pdf">
+                            </div>
+                            <div class="mb-3">
+                                @if ($course->pdf)
+                                    <label for="pdf_preview" class="form-label">Current PDF</label>
+                                    <iframe id="pdf_preview" src="{{ $course->pdf_path }}"
+                                        style="width: 100%; height: 500px;"></iframe>
+                                @else
+                                    <iframe id="pdf_preview" style="width: 100%; height: 500px; display: none;"></iframe>
+                                @endif
                             </div>
                             <div class="mb-3" id="additionalInputs">
                                 @foreach ($course->links as $index => $link)
@@ -72,7 +98,8 @@
             </div>
         </div>
     </div>
-
+@endsection
+@push('js')
     <script>
         function addInput() {
             var additionalInputs = document.getElementById('additionalInputs');
@@ -131,5 +158,36 @@
             var inputGroup = button.parentElement;
             additionalInputs.removeChild(inputGroup);
         }
+
+        $(document).on('change', '.universities', function() {
+
+            var url = "{{ route('admin.ajax.levels') }}";
+            var university_id = $(this).val()
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    university_id: university_id
+                },
+                dataType: 'json',
+                success: function(response) {
+                    $('.levels').html(response);
+                }
+            })
+
+            return false;
+        });
+
+        document.getElementById('pdf_upload').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            if (file.type === 'application/pdf') {
+                var url = URL.createObjectURL(file);
+                var iframe = document.getElementById('pdf_preview');
+                iframe.src = url;
+                iframe.style.display = 'block';
+            }
+        });
     </script>
-@endsection
+@endpush

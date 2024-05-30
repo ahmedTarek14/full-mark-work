@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Type\Http\Requests;
+namespace Modules\University\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class TypeRequest extends FormRequest
+class UniversityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -38,8 +38,8 @@ class TypeRequest extends FormRequest
     public function rules()
     {
 
+        $rules['logo'] = $this->isMethod('post') ? ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'] : ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'];
         $rules['name'] = ['required', 'string', 'max:255'];
-        $rules['university_id'] = ['required','not_in:0','exists:universities,id'];
 
         return $rules;
     }
@@ -47,8 +47,8 @@ class TypeRequest extends FormRequest
     public function attributes()
     {
         $attributes = [
-            'name' => 'Level Name',
-            'university_id' => 'University',
+            'name' => 'University Name',
+            'logo' => 'University Logo',
         ];
 
         return $attributes;

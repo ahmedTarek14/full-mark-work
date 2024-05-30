@@ -16,18 +16,6 @@
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" name="name" value="{{ $type->name }}">
         </div>
-
-        <div class="g-col-12 g-col-sm-12 mt-3">
-            <label for="university_id" class="form-label">University</label>
-            <select class="form-control" id="university_id" name="university_id">
-                <option value="0">Choose One</option>
-                @foreach ($universities as $university)
-                    <option
-                        value="{{ $university->id }}"{{ $type->university_id == $university->id ? 'selected' : '' }}>
-                        {{ $university->name }}</option>
-                @endforeach
-            </select>
-        </div>
     </div>
     <!-- END: Modal Body -->
     <!-- BEGIN: Modal Footer -->
