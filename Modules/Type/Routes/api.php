@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Modules\Type\Http\Controllers\Api\LevelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/type', function (Request $request) {
-    return $request->user();
-});
+Route::prefix('levels')
+    ->group(function () {
+        Route::get('/{university_id}', [LevelController::class, 'index'])->name('level.all')->middleware('auth:sanctum');
+    });
