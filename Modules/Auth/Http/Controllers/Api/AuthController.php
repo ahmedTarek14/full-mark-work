@@ -14,6 +14,7 @@ use Modules\Auth\Entities\PasswordReset;
 use Modules\Auth\Entities\User;
 use Modules\Auth\Http\Requests\LoginRequest;
 use Modules\Auth\Http\Requests\RegisterRequest;
+use Modules\Auth\Transformers\MyCoursesResource;
 use Modules\Auth\Transformers\UserResource;
 
 class AuthController extends Controller
@@ -58,7 +59,6 @@ class AuthController extends Controller
             } else {
                 return api_response_error(__('auth::common.password_mismatch'));
             }
-
         } else {
             return api_response_error(__('auth::common.data_check_failed'));
         }
@@ -183,14 +183,16 @@ class AuthController extends Controller
     {
         $validation = Validator::make($request->all(), [
             'old_password' => ['required'],
-            'password' => ['required',
+            'password' => [
+                'required',
                 'string',
                 Password::min(8)
                     ->mixedCase()
                     ->numbers()
                     ->symbols()
                     ->uncompromised(),
-                'confirmed'],
+                'confirmed'
+            ],
         ], [], [
             'old_password' => __('auth::common.old_password'),
             'password' => __('auth::common.new_password'),
@@ -211,7 +213,6 @@ class AuthController extends Controller
             return api_response_success([
                 'user' => new UserResource($user),
             ]);
-
         } else {
             return api_response_error(__('auth::common.password_mismatch'));
         }
@@ -221,6 +222,18 @@ class AuthController extends Controller
     {
         $user = User::where('id', sanctum()->id())->first();
         $data = new UserResource($user);
+        try {
+            return api_response_success($data);
+        } catch (\Throwable $th) {
+            return api_response_error();
+        }
+    }
+
+    public function my_courses()
+    {
+        $user = User::where('id', sanctum()->id())->first();
+        $allCourses = $user->courses;
+        $data = MyCoursesResource::collection($allCourses)->response()->getData(true);
         try {
             return api_response_success($data);
         } catch (\Throwable $th) {

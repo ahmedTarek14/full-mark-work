@@ -16,6 +16,6 @@ Route::name('auth.')
         Route::post('auth/forget-password', 'forget_password')->name('forget_password');
         Route::post('auth/change-password', 'change_password')->name('change_password');
         Route::get('profile/logged-user', 'logged_user')->name('logged_user')->middleware('auth:sanctum');
+        Route::get('profile/my-courses', 'my_courses')->name('my_courses')->middleware('auth:sanctum');
         Route::delete('profile/delete-account', 'delete_account')->name('delete_account')->middleware('auth:sanctum');
-
     });
