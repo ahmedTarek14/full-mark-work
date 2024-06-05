@@ -17,7 +17,7 @@ class LevelController extends Controller
     public function index($university_id)
     {
         try {
-            $levels = Type::where('university_id', $university_id)->orderBy('created_at', 'desc')->paginate(10);
+            $levels = Type::where('university_id', $university_id)->whereHas('courses')->orderBy('created_at', 'desc')->paginate(10);
             $data = LevelResource::collection($levels)->response()->getData(true);
             return api_response_success($data);
         } catch (\Throwable $th) {

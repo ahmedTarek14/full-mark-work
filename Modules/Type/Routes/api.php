@@ -17,5 +17,5 @@ use Modules\Type\Http\Controllers\Api\LevelController;
 
 Route::prefix('levels')
     ->group(function () {
-        Route::get('/{university_id}', [LevelController::class, 'index'])->name('level.all')->middleware('auth:sanctum');
+        Route::get('/{university_id}', [LevelController::class, 'index'])->name('level.all');
     });

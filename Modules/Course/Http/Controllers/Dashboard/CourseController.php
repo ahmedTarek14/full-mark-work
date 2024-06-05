@@ -37,7 +37,7 @@ class CourseController extends Controller
                 ];
                 $btn = '<div class="d-flex">';
                 if ($returns['pdf_flag'] == 1) {
-                    $btn = $btn . '<a class="btn btn-dark me-1 mb-2" title="View PDF" href="' . $returns['pdf'] . '" download><i class="ti ti-file" style="margin-right:5px;"></i> View PDF</a>';
+                    $btn = $btn . '<a class="btn btn-dark me-1 mb-2" title="View PDF" href="' . $returns['pdf'] . '" download><i class="ti ti-file"></i></a>';
                 }
                 if ($returns['default'] == 'yes') {
                     $btn = $btn . '<a class="btn btn-warning me-1 mb-2" title="Deactivated Account" href="' . route('admin.course.update_default', ['course' => $returns['id']]) . '"><i class="ti ti-minus" style="margin-right:5px;"></i> Remove Default</a>';

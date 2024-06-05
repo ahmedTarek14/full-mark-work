@@ -16,7 +16,7 @@ class CourseController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index($type_id)
     {
         // try {
         //     $user = User::with('courses')->find(Sanctum()->id());
@@ -39,7 +39,7 @@ class CourseController extends Controller
             $user = User::with('courses')->find(Sanctum()->id());
 
             // Fetch all courses
-            $allCourses = Course::all();
+            $allCourses = Course::where('type_id', $type_id)->orderByDesc('id')->get();
 
             // Use CourseResource to transform all courses and include 'is_subscribed'
             $data = CourseResource::collection($allCourses)->response()->getData(true);
@@ -62,10 +62,10 @@ class CourseController extends Controller
         }
     }
 
-    public function default()
+    public function default($type_id)
     {
         try {
-            $defaultCourses = Course::where('default', 1)->get();
+            $defaultCourses = Course::where('type_id', $type_id)->where('default', 1)->get();
             $data = CourseResource::collection($defaultCourses->sortByDesc('created_at'))->response()->getData(true);
             return api_response_success($data);
         } catch (\Throwable $th) {
@@ -73,15 +73,19 @@ class CourseController extends Controller
         }
     }
 
-    public function links($id)
+    public function links(Course $course)
     {
         try {
-            $links = Link::where('course_id', $id)->orderBy('id', 'asc')->get();
+            $links = Link::where('course_id', $course->id)->orderBy('id', 'asc')->get();
             $data = LinkResource::collection($links)->response()->getData(true);
-            return api_response_success($data);
+            return api_response_success(
+                [
+                    'links' => $data,
+                    'pdf' => $course->pdf ? $course->pdf_path : null
+                ]
+            );
         } catch (\Throwable $th) {
             return api_response_error();
         }
     }
-
 }

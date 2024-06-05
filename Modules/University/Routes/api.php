@@ -17,5 +17,5 @@ use Modules\University\Http\Controllers\Api\UniversityController;
 
 Route::prefix('universities')
     ->group(function () {
-        Route::get('/all', [UniversityController::class, 'index'])->name('university.all')->middleware('auth:sanctum');
+        Route::get('/all', [UniversityController::class, 'index'])->name('university.all');
     });
