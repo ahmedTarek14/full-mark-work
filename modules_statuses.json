@@ -4,5 +4,6 @@
     "Course": true,
     "Type": true,
     "Dashboard": true,
-    "University": true
+    "University": true,
+    "Payment": true
 }

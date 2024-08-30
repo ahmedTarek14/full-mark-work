@@ -30,5 +30,11 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'tapTest' => [
+        'secret' => env('TAP_TEST_SECRET_KEY'),
+    ],
+    'tapLive' => [
+        'secret' => env('TAP_LIVE_SECRET_KEY'),
+    ],
 
 ];

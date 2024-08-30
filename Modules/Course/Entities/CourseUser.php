@@ -10,7 +10,8 @@ use Modules\Auth\Entities\User;
 class CourseUser extends Model
 {
     use HasFactory;
-
+    protected $table = 'course_users';
+    public $timestamps = true;
     protected $fillable = ['course_id', 'user_id'];
 
     /**
@@ -32,5 +33,4 @@ class CourseUser extends Model
     {
         return $this->belongsTo(Course::class);
     }
-
 }

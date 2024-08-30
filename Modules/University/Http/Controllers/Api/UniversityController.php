@@ -27,7 +27,7 @@ class UniversityController extends Controller
             $data = UniversityResource::collection($universities)->response()->getData(true);
             return api_response_success($data);
         } catch (\Throwable $th) {
-            dd($th);
+            // dd($th);
             return api_response_error();
         }
     }
