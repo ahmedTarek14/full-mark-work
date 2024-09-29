@@ -12,7 +12,7 @@ trait TapPaymentTrait
     public function __construct()
     {
         $this->baseUri = 'https://api.tap.company/v2/';
-        $this->secretKey = config('services.tap.secret');
+        $this->secretKey = config('services.tapTest.secret');
     }
 
     private function makeRequest(string $method, string $endpoint, array $data = [])

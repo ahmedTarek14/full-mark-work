@@ -8,6 +8,14 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 class RouteServiceProvider extends ServiceProvider
 {
     /**
+     * The path to the "home" route for your application.
+     *
+     * Typically, users are redirected here after authentication.
+     *
+     * @var string
+     */
+    public const HOME = '/admin';
+    /**
      * The module namespace to assume when generating URLs to actions.
      *
      * @var string
