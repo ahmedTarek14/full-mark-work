@@ -15,7 +15,7 @@
             <!--  Header Start -->
             @include('layouts.header')
             <!--  Header End -->
-            <div class="container-fluid">
+            <div class="container-xxl">
                 @yield('content')
             </div>
         </div>

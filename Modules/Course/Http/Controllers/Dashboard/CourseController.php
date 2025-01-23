@@ -22,11 +22,12 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::orderBy('created_at', 'desc')->paginate(10)
+        $courses = Course::orderBy('created_at', 'desc')->paginate(15)
             ->through(function ($query) {
                 $returns = [
                     'id' => $query->id,
                     'name' => $query->name,
+                    'price' => $query->price,
                     'level' => $query?->level?->name,
                     'university' => $query?->university?->name,
                     'users' => $query->usersPivot->count(),
@@ -90,6 +91,7 @@ class CourseController extends Controller
                 'name' => $request->course_name,
                 'university_id' => $request->university_id,
                 'type_id' => $request->type_id,
+                'price' => $request->price,
                 'pdf' => $request->pdf ? $this->image_manipulate($request->pdf, 'courses') : null,
             ]);
 
@@ -141,12 +143,15 @@ class CourseController extends Controller
     public function update(CourseRequest $request, Course $course)
     {
         try {
-            $course->update([
-                'name' => $request->course_name,
-                'university_id' => $request->university_id,
-                'type_id' => $request->type_id,
-            ]);
-
+            $data['name'] = $request->course_name;
+            $data['price'] = $request->price;
+            $data['university_id'] = $request->university_id;
+            $data['type_id'] = $request->type_id;
+            if ($request->pdf) {
+                $this->image_delete($course->pdf, 'courses');
+                $data['pdf'] = $this->image_manipulate($request->pdf, 'courses');
+            }
+            $course->update($data);
             // Update links
             $links = [];
             foreach ($request->link_title as $key => $title) {

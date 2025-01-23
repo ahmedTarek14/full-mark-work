@@ -771,7 +771,7 @@ progress {
 
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-        max-width: 1320px
+        max-width: 1600px
     }
 }
 
@@ -19261,7 +19261,7 @@ textarea.form-control-lg {
 }
 
 .app-header .container-fluid, .app-header .container-lg, .app-header .container-md, .app-header .container-sm, .app-header .container-xl, .app-header .container-xxl {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0 30px
 }
@@ -19462,7 +19462,7 @@ textarea.form-control-lg {
 }
 
 .body-wrapper>.container-fluid, .body-wrapper>.container-lg, .body-wrapper>.container-md, .body-wrapper>.container-sm, .body-wrapper>.container-xl, .body-wrapper>.container-xxl {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 24px;
     -webkit-transition: 0.2s ease-in;

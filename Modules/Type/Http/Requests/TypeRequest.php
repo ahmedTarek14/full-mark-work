@@ -39,7 +39,8 @@ class TypeRequest extends FormRequest
     {
 
         $rules['name'] = ['required', 'string', 'max:255'];
-        $rules['university_id'] = ['required','not_in:0','exists:universities,id'];
+        $rules['faculty'] = ['nullable', 'string', 'max:255'];
+        $rules['university_id'] = ['required', 'not_in:0', 'exists:universities,id'];
 
         return $rules;
     }
@@ -48,6 +49,7 @@ class TypeRequest extends FormRequest
     {
         $attributes = [
             'name' => 'Level Name',
+            'faculty' => 'Faculty Name',
             'university_id' => 'University',
         ];
 

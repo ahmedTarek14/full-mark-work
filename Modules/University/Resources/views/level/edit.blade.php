@@ -1,4 +1,5 @@
-<form class="modal-content ajax-form" action="{{ route('admin.type.update', ['type' => $type->id]) }}" method="PUT">
+<form class="modal-content ajax-form" action="{{ route('admin.university.level.update', ['type' => $type->id]) }}"
+    method="PUT">
     @csrf
     @method('PUT')
     <!-- BEGIN: Modal Header -->
@@ -13,8 +14,13 @@
 
 
         <div class="g-col-12 g-col-sm-12">
-            <label for="name" class="form-label">Name</label>
+            <label for="name" class="form-label">Level Name</label>
             <input type="text" class="form-control" name="name" value="{{ $type->name }}">
+        </div>
+
+        <div class="g-col-12 g-col-sm-12 mt-3">
+            <label for="faculty" class="form-label">Faculty Name</label>
+            <input type="text" class="form-control" name="faculty" value="{{ $type->faculty_name }}">
         </div>
     </div>
     <!-- END: Modal Body -->

@@ -13,17 +13,16 @@ class Type extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','university_id'];
+    protected $fillable = ['name', 'university_id', 'faculty_name'];
 
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);
     }
 
-    
+
     public function university(): BelongsTo
     {
         return $this->belongsTo(University::class, 'university_id');
     }
-
 }

@@ -17,6 +17,12 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="price" class="form-label">Course Price</label>
+                                <input type="text" class="form-control" id="price" name="price"
+                                    value="{{ old('price', $course->price) }}">
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="university_id" class="form-label">University</label>
                                 <select class="form-control universities" id="university_id" name="university_id">
                                     <option value="0">Choose One</option>
@@ -90,8 +96,9 @@
                                     @endforeach
                                 </select>
                             </div>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="mb-3 text-end">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>

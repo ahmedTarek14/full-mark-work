@@ -30,7 +30,7 @@ class UniversityController extends Controller
                 $btn = '<div class="d-flex">';
                 $btn .= '<a href="' . route('admin.university.level.index', ['id' => $returns['id']]) . '" title="Classes" class="btn btn-success me-1 mb-2" ><i class="fas fa-info w-5 h-5"></i> Levels</a>';
                 $btn .= '<a href="javascript:;" class="btn btn-primary me-1 mb-2 btn-modal-view" data-url="' . route('admin.university.edit', ['university' => $returns['id']]) . '"><i class="ti ti-edit" style="margin-right:5px;"></i> Edit</a>';
-                $btn .= '<a href="javascript:;" class="btn btn-danger me-1 mb-2 delete-btn" data-url="' . route('admin.university.destroy', ['university' => $returns['id']]) . '"><i class="ti ti-trash" style="margin-right:5px;"></i> Delete</a>';
+                // $btn .= '<a href="javascript:;" class="btn btn-danger me-1 mb-2 delete-btn" data-url="' . route('admin.university.destroy', ['university' => $returns['id']]) . '"><i class="ti ti-trash" style="margin-right:5px;"></i> Delete</a>';
                 $btn .= '</div>';
                 $returns['btn'] = $btn;
                 return $returns;

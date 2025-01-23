@@ -39,6 +39,8 @@ class CourseRequest extends FormRequest
     {
 
         $rules['course_name'] = ['required', 'string'];
+        $rules['price'] = ['required', 'numeric', 'min:0'];
+        $rules['university_id'] = ['required', 'not_in:0'];
         $rules['type_id'] = ['required', 'not_in:0'];
         $rules['link_title'] = ['array', 'min:1'];
         $rules['link_title.*'] = ['string', 'distinct', 'max:255'];
@@ -49,12 +51,13 @@ class CourseRequest extends FormRequest
         $rules['user_id'] = ['required', 'array', 'min:1'];
 
         return $rules;
-
     }
 
     public function onUpdate()
     {
         $rules['course_name'] = ['required', 'string'];
+        $rules['price'] = ['required', 'numeric', 'min:0'];
+        $rules['university_id'] = ['required', 'not_in:0'];
         $rules['type_id'] = ['required', 'not_in:0'];
         $rules['link_title'] = ['array', 'min:1'];
         $rules['link_title.*'] = ['string', 'distinct', 'max:255'];
@@ -79,7 +82,6 @@ class CourseRequest extends FormRequest
             foreach ($this->get('link') as $key => $value) {
 
                 $messages['link.required'] = 'link number ' . $key + 1 . 'is required';
-
             }
         }
         return $messages;
@@ -89,6 +91,8 @@ class CourseRequest extends FormRequest
     {
         $attributes = [
             'course_name' => 'Course Name',
+            'price' => 'Course Price',
+            'university_id' => 'University',
             'type_id' => 'Course Class',
             'link_title' => 'Video Title',
             'link' => 'Link',

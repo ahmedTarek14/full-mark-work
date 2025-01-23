@@ -12,8 +12,12 @@
                 <div class="modal-body grid columns-12 gap-4 gap-y-3">
 
                     <div class="g-col-12 g-col-sm-12">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Level Name</label>
                         <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="g-col-12 g-col-sm-12 mt-3">
+                        <label for="faculty" class="form-label">Faculty Name</label>
+                        <input type="text" class="form-control" name="faculty">
                     </div>
 
                     <div class="g-col-12 g-col-sm-12  mt-3">
@@ -61,6 +65,9 @@
                                         <h6 class="fw-semibold mb-0">Level</h6>
                                     </th>
                                     <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Faculty</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
                                         <h6 class="fw-semibold mb-0">University</h6>
                                     </th>
                                     <th class="border-bottom-0">
@@ -80,6 +87,9 @@
 
                                         <td class="border-bottom-0">
                                             <p class="mb-0 fw-normal">{{ $type['name'] }}</p>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">{{ $type['faculty_name'] }}</p>
                                         </td>
                                         <td class="border-bottom-0">
                                             <p class="mb-0 fw-normal {{ $type['university'] ? '' : 'text-danger' }}">

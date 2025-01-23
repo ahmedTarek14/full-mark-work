@@ -22,7 +22,8 @@ class TypeController extends Controller
                 $returns = [
                     'id' => $query->id,
                     'name' => $query->name,
-                    'university'=>$query?->university?->name,
+                    'faculty_name' => $query?->faculty_name,
+                    'university' => $query?->university?->name,
                     'created_at' => $query->created_at->format('d-m-Y'),
                 ];
                 $btn = '<div class="d-flex">';
@@ -32,10 +33,9 @@ class TypeController extends Controller
                 $returns['btn'] = $btn;
                 return $returns;
             });
-            $universities = University::select('name','id')->orderBy('created_at', 'desc')->get();
+        $universities = University::select('name', 'id')->orderBy('created_at', 'desc')->get();
 
-        return view('type::type.index', compact('types','universities'));
-
+        return view('type::type.index', compact('types', 'universities'));
     }
 
     /**
@@ -48,6 +48,7 @@ class TypeController extends Controller
         try {
             $data = [
                 'name' => $request->name,
+                'faculty_name' => $request->faculty,
                 'university_id' => $request->university_id,
             ];
             Type::create($data);
@@ -64,8 +65,8 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        $universities = University::select('name','id')->orderBy('created_at', 'desc')->get();
-        return view('type::type.edit', compact('type','universities'));
+        $universities = University::select('name', 'id')->orderBy('created_at', 'desc')->get();
+        return view('type::type.edit', compact('type', 'universities'));
     }
 
     /**
@@ -78,6 +79,7 @@ class TypeController extends Controller
     {
         try {
             $data['name'] = $request->name;
+            $data['faculty_name'] = $request->faculty;
             $data['university_id'] = $request->university_id;
             $type->update($data);
             return update_response();
@@ -97,5 +99,4 @@ class TypeController extends Controller
 
         return redirect()->back();
     }
-
 }

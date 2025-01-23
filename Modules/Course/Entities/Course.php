@@ -16,7 +16,7 @@ class Course extends Model
 {
     use HasFactory, ImageTrait;
 
-    protected $fillable = ['name', 'type_id', 'pdf', 'default', 'university_id'];
+    protected $fillable = ['name', 'type_id', 'pdf', 'default', 'university_id', 'price'];
 
     /**
      * return course users

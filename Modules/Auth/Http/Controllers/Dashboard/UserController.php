@@ -15,18 +15,18 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::query()->orderBy('id', 'desc')->paginate(10);
+        $users = User::query()->orderBy('id', 'desc')->paginate(15);
 
-            if ($request->ajax()) {
-                $sort_by = $request->get('sortby');
-                $sort_type = $request->get('sorttype');
-                $query = str_replace(" ", "%", $request->get('query'));
-                $users = User::query()->where(function($item) use ($query){
-                    $item->where('name' , 'LIKE' , '%'.$query.'%')->orWhere('email' , 'LIKE' , '%'.$query.'%');
-                })->orderBy($sort_by, $sort_type)->paginate(10);
-                
-                return view('auth::user.data_table', compact('users'))->render();
-            }
+        if ($request->ajax()) {
+            $sort_by = $request->get('sortby');
+            $sort_type = $request->get('sorttype');
+            $query = str_replace(" ", "%", $request->get('query'));
+            $users = User::query()->where(function ($item) use ($query) {
+                $item->where('name', 'LIKE', '%' . $query . '%')->orWhere('email', 'LIKE', '%' . $query . '%');
+            })->orderBy($sort_by, $sort_type)->paginate(10);
+
+            return view('auth::user.data_table', compact('users'))->render();
+        }
 
         return view('auth::user.index', compact('users'));
     }
